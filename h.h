@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define FREE(x) free(x); x=NULL; // idk why not
-#define blocks(buffer, separator) (calc(buffer, separator).enc+1) // just help to calculate the blocks
+#define FREE(x) free(x); x=NULL;
+#define blocks(buffer, separator) (calc(buffer, separator).enc+1) // just help to calculate blocks
 
 typedef struct {
     int* offsets;
@@ -27,4 +27,4 @@ size_t len(char*);
 char* cpy(char*, char*, size_t);
 meta calc(char*, char);
 
-void dummy(){}           // debugging dummy
+void dummy(){} //debug
