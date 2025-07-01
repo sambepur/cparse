@@ -1,6 +1,9 @@
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <sys/types.h>
+
+#ifndef PARSE_H
+#define PARSE_H
 
 #define FREE(x) free(x); x=NULL;
 #define blocks(buffer, separator) (calc(buffer, separator).enc+1) // just help to calculate blocks
@@ -20,11 +23,12 @@ typedef struct {
     size_t length;
 } node;
 
-int index(char*, char);
+u_int8_t atoui8(char*);
+int is_digit(char);
 node separate(char*, char);
 int cut(char*, char*, int, int);
 size_t len(char*);
 char* cpy(char*, char*, size_t);
 meta calc(char*, char);
 
-void dummy(){} //debug
+#endif

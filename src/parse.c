@@ -1,17 +1,9 @@
-#include "h.h"
+#include "include/parse.h"
 
-extern int x;
-
-int main() {
-    const char separator = ';';
-    char* buffer = "hello;line;heee;;l;;";
-    node n = separate(buffer, separator);
-    for (int i = 0; i<n.length; i++) {
-        printf("%s\n",n.tok[i].buff);
-    }
-    FREE(n.tok->buff);
-    FREE(n.tok);
+int is_digit(char w) {
+    return (w >= '0' && w <= '9');
 }
+
 char* cpy(char* buff_1, char* buff_2, size_t l) {
     while(l--) {
         *buff_2++ = *buff_1++; 
@@ -38,17 +30,6 @@ int cut(char* buff, char* res, int start, int offset) {
     }
     res[offset] = 0;
     return 0;
-}
-
-int index(char* buffer, char w) {
-    int t = 0;
-    for (int i = 0; i<len(buffer); i++) {
-        if (buffer[i] == w) {
-            t = i;
-            break;
-        }
-    }
-    return t;
 }
 
 node separate(char* buffer, char w) {
@@ -78,7 +59,7 @@ node separate(char* buffer, char w) {
 
 // calculate encounters of character in buffer and their positions 
 meta calc(char* buff, char w) {
-    meta m = {0, NULL};
+    meta m = {NULL, 0};
     size_t l = len(buff);
     for (int i = 0; i<l; i++) {
         if (buff[i] == w) {
@@ -102,4 +83,26 @@ meta calc(char* buff, char w) {
         }
     }
     return m;
+}
+
+u_int8_t atoui8(char *str) {
+    u_int8_t value = 0;
+    if (*str == '\0') {
+        return 0;
+    }
+
+    while (*str != '\0') {
+        if (!is_digit(*str)) {
+            return 0;
+        }
+
+        value = value * 10 + (*str - '0');
+
+        if (value > 255) {
+            return 0; 
+        }
+
+        str++;
+    }
+    return value;
 }
